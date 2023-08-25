@@ -1,5 +1,6 @@
 <script>
   export let id = "";
+  export let value = "";
   let estados =[
     "AC",
     "AL",
@@ -31,10 +32,10 @@
   ]
 </script>
 
-<select id="{id}" class="select select-bordered w-full max-w-xs">
-  <option disabled selected>Selecione</option>
+<select id={id} bind:value={value} class="select select-bordered w-full max-w-xs">
+  <option disabled selected>SELECIONE</option>
   {#each estados as estado}
-    <option>{estado}</option>
+    <option value="{estado}">{estado}</option>
   {/each}
 </select>
 
