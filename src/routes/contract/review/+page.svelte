@@ -16,13 +16,13 @@
       "Valores",
       "Revisão",
     ],
-    stepIndex: 2,
+    stepIndex: 4,
     stepTip: "Insira os dados do Promitente Comprador.",
     previous: {
       name: "Voltar"
     },
     next: {
-      name: "Avançar"
+      name: "Gerar Contrato"
     },
     onNext: onNextHandler,
     onPrevious: onPreviousHandler,
@@ -65,12 +65,12 @@
     // console.log("Next button pressed: " + JSON.stringify(pessoaFisica));
     console.log("Next button pressed: ")
     console.log(pessoaFisica);
-    window.location.href = "/contract/values"
+    window.location.href = "/home"
   }
   
   function onPreviousHandler() {
     console.log("Previous button pressed.");
-    window.location.href = "/contract/buyer"
+    window.location.href = "/contract/values"
   }
 
 </script>

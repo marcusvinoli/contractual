@@ -16,7 +16,7 @@
       "Valores",
       "Revisão",
     ],
-    stepIndex: 2,
+    stepIndex: 1,
     stepTip: "Insira os dados do Promitente Comprador.",
     previous: {
       name: "Voltar"
@@ -65,18 +65,18 @@
     // console.log("Next button pressed: " + JSON.stringify(pessoaFisica));
     console.log("Next button pressed: ")
     console.log(pessoaFisica);
-    window.location.href = "/contract/values"
+    window.location.href = "/contract/subject"
   }
   
   function onPreviousHandler() {
     console.log("Previous button pressed.");
-    window.location.href = "/contract/buyer"
+    window.location.href = "/contract/vendor"
   }
 
 </script>
 
 <div>
   <ContractForm parameters={parameters}>
-    <h1>Objeto do Contrato</h1>
+    <PessoaFisica bind:value={pessoaFisica}/>
   </ContractForm>
 </div>

@@ -3,7 +3,7 @@
     <img src="/logo-contractual.png" alt="Contractual" style="width: 200px;"/>
   </div>
   <div class="content-div p-5"> 
-    <a class="btn btn-primary" href="/contract">Novo Contrato</a>
+    <a class="btn btn-primary" href="/contract/vendor">Novo Contrato</a>
   </div>
 </div>
 
