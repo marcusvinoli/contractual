@@ -1,6 +1,6 @@
 <script lang="ts">
   export let id: string;
-  export let value: string;
+  export let value: string | undefined;
   export let mask: string | Array<string>;
   export let customClass: string;
   export let placeholder: string;
