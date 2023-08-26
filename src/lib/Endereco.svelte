@@ -1,26 +1,29 @@
-<script lang="ts">
-// @ts-nocheck
+<script context="module" lang="ts">
+  export type EnderecoType = {
+    cep: string,
+    logradouro: string,
+    numero: string,
+    qd: string,
+    lt: string,
+    complemeto: string,
+    bairro: string,
+    cidade: string,
+    estado: string,
+  }
+  
+</script>
 
+<script lang="ts">
   import MaskedInput from "./utils/MaskedInput.svelte";
   import EstadoSelector from "./utils/EstadoSelector.svelte";
 
   import cep from "cep-promise";
 
   let loading = '';
-  let errorMessage = ''
   let semNumero = false;
+  // let errorMessage = '' // TODO: Implement error messaging
 
-  export let endereco = {
-    cep: "",
-    logradouro: "",
-    numero: "",
-    qd: "",
-    lt: "",
-    complemeto: "",
-    bairro: "",
-    cidade: "",
-    estado: ""
-  }
+  export let value: EnderecoType;
 
   function startLoading() {
     loading = 'loading';
@@ -30,23 +33,22 @@
     loading = '';
   }
 
-  function loadResults(data) {
-    endereco.logradouro = data.street;
-    endereco.bairro = data.neighborhood;
-    endereco.cidade = data.city;
-    endereco.estado = data.state;
+  function loadResults(data: any) {
+    value.logradouro = data.street;
+    value.bairro = data.neighborhood;
+    value.cidade = data.city;
+    value.estado = data.state;
     stopLoading();
   }
   
-  function loadError(e) {
+  function loadError(e: any) {
     console.log(e);
     stopLoading();
   }
 
-  function loadCepInfo(inputCep = String) {
+  function loadCepInfo() {
     startLoading();
-    var cepData = endereco.cep.replace(/[^\d]/g, '');
-    console.log("Searching for" + cepData);
+    var cepData = value.cep.replace(/[^\d]/g, '');
     cep(cepData)
     .then(
       loadResults
@@ -62,7 +64,7 @@
     <div class="p-1">
       <label for="cep" class="label">CEP</label>
       <div class="flex flex-row w-full">
-        <MaskedInput id="cep" type="text" bind:value={endereco.cep} customClass="input input-bordered w-50 p-1" mask="##.###-###"/>
+        <MaskedInput id="cep"  placeholder="00000-000" customClass="input input-bordered w-50 p-1" mask="#####-###" bind:value={value.cep}/>
         <button class="btn ml-2" on:click={loadCepInfo}>
           <span class="{loading} loading-spinner text-primary"></span>
           Pesquisar
@@ -71,22 +73,22 @@
       </div>
     </div>
     <div class="grow p-1">
-      <label for="cep" class="label">Logradouro</label>
-      <input id="cep" type="text" placeholder="Logradouro" class="input input-bordered w-full" bind:value={endereco.logradouro}/>
+      <label for="logradouro" class="label">Logradouro</label>
+      <input id="logradouro" type="text" placeholder="Rua José da Silva" class="input input-bordered w-full" bind:value={value.logradouro}/>
     </div>
     <div class="flex flex-row">
       <div class="content-center p-1">
         <label for="semNumero" class="label">Sem Número</label>
         <div class="p-2" style="text-align: center;">
-          <input id="semNumero" type="checkbox" bind:checked="{semNumero}" class="checkbox checkbox-lg" />
+          <input id="semNumero" type="checkbox" bind:checked="{semNumero}" class="checkbox checkbox-lg"/>
         </div>
       </div>
       <div class="p-1">
         <label for="numero" class="label">Número</label>
         {#if semNumero}
-          <input id="numero" type="text" placeholder="Nº" class="input input-bordered w-24" value="S/N" disabled/>
+          <input id="numero" type="text" class="input input-bordered w-24" value="S/N" disabled/>
         {:else}
-          <input id="numero" type="text" placeholder="Nº" class="input input-bordered w-24" bind:value={endereco.numero}/>
+          <input id="numero" type="text" placeholder="Nº" class="input input-bordered w-24" bind:value={value.numero}/>
         {/if}
       </div>
     </div>
@@ -94,15 +96,15 @@
   <div class="flex w-full">
     <div class="p-1 w-28">
       <label for="qd" class="label">Qd.</label>
-      <input id="qd" type="text" placeholder="Qd." class="input input-bordered w-full" />
+      <input id="qd" type="text" placeholder="00" class="input input-bordered w-full" bind:value={value.qd}/>
     </div>
     <div class="p-1 w-28">
       <label for="lt" class="label">Lt.</label>
-      <input id="lt" type="text" placeholder="Lt." class="input input-bordered w-full" />
+      <input id="lt" type="text" placeholder="00" class="input input-bordered w-full" bind:value={value.lt}/>
     </div>
     <div class="p-1 grow">
       <label for="complemento" class="label">Complemento</label>
-      <input id="complemento" type="text" placeholder="Complemento" class="input input-bordered w-full" />
+      <input id="complemento" type="text" placeholder="Apt. 00" class="input input-bordered w-full" bind:value={value.complemeto}/>
     </div>
   </div>
   <div class="flex w-full">
@@ -110,15 +112,15 @@
   <div class="flex w-full">
     <div class="p-1 grow">
       <label for="bairro" class="label">Bairro</label>
-      <input id="bairro" type="text" placeholder="Bairro" class="input input-bordered w-full" bind:value={endereco.bairro}/>
+      <input id="bairro" type="text" placeholder="Bairro" class="input input-bordered w-full" bind:value={value.bairro}/>
     </div>
     <div class="p-1 grow">
       <label for="cidade" class="label">Cidade</label>
-      <input id="cidade" type="text" placeholder="Cidade" class="input input-bordered w-full" bind:value={endereco.cidade}/>
+      <input id="cidade" type="text" placeholder="Cidade" class="input input-bordered w-full" bind:value={value.cidade}/>
     </div>
     <div class="p-1">
       <label for="estado" class="label">Estado</label>
-      <EstadoSelector id="estado" bind:value={endereco.estado}/>
+      <EstadoSelector id="estado" bind:value={value.estado}/>
     </div>
   </div>
 </div>
