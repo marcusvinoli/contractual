@@ -14,35 +14,14 @@
 
 <script lang="ts">
   export let parameters: ContractFormParameters;
-
-  /* export let parameters: ContractFormParams = {
-    name: "Novo Contrato",
-    steps: [
-      "Promitente Vendedor",
-      "Promitente Comprador",
-      "Objeto",
-      "Valores",
-      "Revisão",
-    ],
-    stepIndex: 0,
-    stepTip: "Insira os dados do Promitente Vendedor.",
-    previous: {
-      name: "Cancelar"
-    },
-    next: {
-      name: "Avançar",
-    },
-    onNext: navigate,
-    onPrevious: navigate,
-  } */
 </script>
 
-<div class="p-5 w-full">
-  <div class="mb-4 prose">
+<div class="p-5 w-full h-full">
+  <div class="pb-4 prose">
     <h3>{parameters.name}</h3>
   </div>
-  <div class="flex flex-row">
-    <div class="w-64">
+  <div class="flex flex-row h-full">
+    <div class="w-80">
       <ul class="steps steps-vertical">
         {#each parameters.steps as step, index}
           {#if (index<=parameters.stepIndex)}
@@ -53,9 +32,11 @@
         {/each}
       </ul>
     </div>
-    <div class="grow flex flex-col">
-      <div class="grow">
-        <slot /> 
+    <div class="flex flex-col w-full h-full overflow-auto">
+      <div class="flex flex-col overflow-auto">
+        <div class="grow">
+          <slot /> 
+        </div>
       </div>
       <div class="flex justify-end">
         <div class="ml-1">
