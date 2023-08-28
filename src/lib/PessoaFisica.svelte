@@ -32,10 +32,6 @@
   
   export let value: PessoaFisicaType;
   
-  // Dummies values to prevent Server Errors.
-  let dummy: DadosPessoais;
-  let dummyPhone: string;
-
 </script>
 
 <div>
