@@ -1,3 +1,14 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<button class="btn btn-primary">Button</button>
+<div class="container mx-auto flex flex-col h-full p-5 justify-center items-center">
+  <div class="content-div p-5">
+    <img src="/logo-contractual.png" alt="Contractual" style="width: 200px;"/>
+  </div>
+  <div class="content-div p-5"> 
+    <a class="btn btn-primary" href="/contract/vendor">Novo Contrato</a>
+  </div>
+</div>
+
+<style>
+  .content-div {
+    text-align: center;
+  }
+</style>

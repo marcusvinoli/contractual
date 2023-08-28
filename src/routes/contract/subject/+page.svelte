@@ -54,7 +54,7 @@
 		  numero: "",
 		  qd: "",
 		  lt: "",
-		  complemeto: "",
+		  complemento: "",
 		  bairro: "",
 		  cidade: "",
 		  estado: ""
@@ -75,8 +75,9 @@
 
 </script>
 
-<div>
-  <ContractForm parameters={parameters}>
-    <h1>Objeto do Contrato</h1>
-  </ContractForm>
+<ContractForm parameters={parameters}>
+  <h1>Objeto do Contrato</h1>
+</ContractForm>
+<!-- <div class="">
 </div>
+ -->

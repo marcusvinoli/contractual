@@ -1,12 +1,14 @@
 <script lang="ts">
+  import { invoke } from '@tauri-apps/api'
+  import { onMount } from 'svelte';
+
   import ContractForm from "$lib/ContractForm.svelte";
   import PessoaFisica from "$lib/PessoaFisica.svelte";
   
   import type { ContractFormParameters } from "$lib/ContractForm.svelte";
   import type { PessoaFisicaType } from "$lib/PessoaFisica.svelte";
+	import type { parse } from 'svelte/compiler';
 
-  //let params: ContractFormParameters;
-  
   let parameters = {
     name: "Novo Contrato",
     steps: [
@@ -54,27 +56,39 @@
 		  numero: "",
 		  qd: "",
 		  lt: "",
-		  complemeto: "",
+		  complemento: "",
 		  bairro: "",
 		  cidade: "",
 		  estado: ""
 	  }
   }
 
+  onMount(() => {
+    console.log("Page mounted.");
+    invoke('read_vendor').then((data: any) => {
+      pessoaFisica = JSON.parse(data);
+      console.log(data);
+    }
+    )
+  })
+
   function onNextHandler() {
     console.log("Next button pressed: ")
     console.log(pessoaFisica);
-    window.location.href = "/contract/buyer"
+    invoke('write_vendor', {data: JSON.stringify(pessoaFisica)}).then(() => {
+      window.location.href = "/contract/buyer"
+    }
+    )
   }
   
   function onPreviousHandler() {
     console.log("Previous button pressed.");
-    window.location.href = "/home"
+    window.location.href = "/"
   }
 
 </script>
 
-<div>
+<div class="w-full overflow-hidden">
   <ContractForm parameters={parameters}>
     <PessoaFisica bind:value={pessoaFisica}/>
   </ContractForm>
