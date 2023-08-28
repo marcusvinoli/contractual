@@ -5,7 +5,7 @@
     numero: string,
     qd: string,
     lt: string,
-    complemeto: string,
+    complemento: string,
     bairro: string,
     cidade: string,
     estado: string,
@@ -18,12 +18,26 @@
   import EstadoSelector from "./utils/EstadoSelector.svelte";
 
   import cep from "cep-promise";
+	import { onMount } from "svelte";
 
   let loading = '';
   let semNumero = false;
   // let errorMessage = '' // TODO: Implement error messaging
 
   export let value: EnderecoType;
+
+  onMount(() => {
+    if(value.numero === "S/N") {
+      semNumero = true;
+    }
+  })
+
+  function updateNumero(e: any) {
+    console.log(e)
+    value.numero = semNumero? "S/N" : "";
+    console.log(semNumero);
+    console.log(value.numero);
+  }
 
   function startLoading() {
     loading = 'loading';
@@ -78,15 +92,15 @@
     </div>
     <div class="flex flex-row">
       <div class="content-center p-1">
-        <label for="semNumero" class="label">Sem Número</label>
+        <label for="sem_numero" class="label">Sem Número</label>
         <div class="p-2" style="text-align: center;">
-          <input id="semNumero" type="checkbox" bind:checked="{semNumero}" class="checkbox checkbox-lg"/>
+          <input id="sem_numero" type="checkbox" class="checkbox checkbox-lg" bind:checked={semNumero}/>
         </div>
       </div>
       <div class="p-1">
         <label for="numero" class="label">Número</label>
         {#if semNumero}
-          <input id="numero" type="text" class="input input-bordered w-24" value="S/N" disabled/>
+        <input id="numero" type="text" placeholder="S/N" class="input input-bordered w-24" bind:value={value.numero} disabled/>
         {:else}
           <input id="numero" type="text" placeholder="Nº" class="input input-bordered w-24" bind:value={value.numero}/>
         {/if}
@@ -104,7 +118,7 @@
     </div>
     <div class="p-1 grow">
       <label for="complemento" class="label">Complemento</label>
-      <input id="complemento" type="text" placeholder="Apt. 00" class="input input-bordered w-full" bind:value={value.complemeto}/>
+      <input id="complemento" type="text" placeholder="Apt. 00" class="input input-bordered w-full" bind:value={value.complemento}/>
     </div>
   </div>
   <div class="flex w-full">
